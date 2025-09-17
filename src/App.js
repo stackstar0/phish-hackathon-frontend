@@ -10,11 +10,12 @@ function App() {
   const checkUrl = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(BACKEND_URL, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/check-url`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
       });
+
       const data = await response.json();
       setResult(data);
     } catch (err) {
