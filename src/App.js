@@ -4,13 +4,13 @@ function App() {
   const [url, setUrl] = useState("");
   const [result, setResult] = useState(null);
 
-  // Use your deployed Render backend URL here
+  // Use your deployed Render backend URL
   const BACKEND_URL = "https://phish-hackathon-backend.onrender.com/check-url";
 
   const checkUrl = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/check-url`, {
+      const response = await fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
