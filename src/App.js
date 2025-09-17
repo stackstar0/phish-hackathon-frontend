@@ -4,10 +4,13 @@ function App() {
   const [url, setUrl] = useState("");
   const [result, setResult] = useState(null);
 
+  // Use your deployed Render backend URL here
+  const BACKEND_URL = "https://phish-hackathon-backend.onrender.com/check-url";
+
   const checkUrl = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:5000/check-url", {
+      const response = await fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
@@ -16,6 +19,7 @@ function App() {
       setResult(data);
     } catch (err) {
       console.error(err);
+      setResult({ phishing: null, error: "Backend not reachable" });
     }
   };
 
@@ -44,7 +48,11 @@ function App() {
 
         {result && (
           <div className="mt-6">
-            {result.phishing ? (
+            {result.error ? (
+              <p className="text-yellow-300 font-bold text-xl animate-pulse">
+                ⚠ {result.error}
+              </p>
+            ) : result.phishing ? (
               <p className="text-red-500 font-bold text-xl animate-pulse">
                 ❌ Phishing Detected!
               </p>
